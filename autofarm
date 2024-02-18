@@ -1,0 +1,192 @@
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+function fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM(data) m=string.sub(data, 0, 55) data=data:gsub(m,'')
+
+data = string.gsub(data, '[^'..b..'=]', '') return (data:gsub('.', function(x) if (x == '=') then return '' end local r,f='',(b:find(x)-1) for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end return r; end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x) if (#x ~= 8) then return '' end local c=0 for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end return string.char(c) end)) end
+
+
+ 
+
+
+local lplr = game.Players.LocalPlayer
+
+local QuestData = loadstring(game:HttpGet(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('vVUSdMzKopdcAtjjPOiZVGdYDHgaRRhMmzENAegOlTOSVyyMpUwDhFEaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2VpeG90aWMwNy9CbG94ZnJ1aXQvbWFpbi9BdXRvZmFybSUyMERhdGEubHVh')))()
+local WalkTween = loadstring(game:HttpGet(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('EtXkTpgFCoCUfeGvuWoqtIDRWDGmeehBTDCSrHyLkJLyTuWaYUBJJCLaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2VpeG90aWMwNy9VdGlscy9tYWluL1VuaXZlcnNhbCUyMFR3ZWVuLmx1YQ==')))()
+
+-- No Cooldown
+
+local CombatFrameworkOld = require(lplr.PlayerScripts.CombatFramework) 
+require(game.ReplicatedStorage.Util.CameraShaker):Stop()
+
+local CombatFramework = debug.getupvalues(CombatFrameworkOld)[2]
+game:GetService(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('upWUBEoycGsZNhqqCJxixSUridDfovYVBQUdKwrtBuVgAdbrISoEvSPUnVuU2VydmljZQ==')).Stepped:Connect(function()
+    CombatFramework.activeController.attacking = false
+	CombatFramework.activeController.increment = 3
+	CombatFramework.activeController.blocking = false
+	CombatFramework.activeController.timeToNextBlock = 0
+	CombatFramework.activeController.timeToNextAttack = 0
+    CombatFramework.activeController.hitboxMagnitude = 54
+end)
+
+-- in-game functions
+
+if game.PlaceId == 2753915549 then
+    World = 1
+elseif game.PlaceId == 4442272183 then
+    World = 2
+elseif game.PlaceId == 7449423635 then
+    World = 3
+else game.Players.LocalPlayer:Kick(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('GnUiyuoEAmgQULAJRpgMLksguRGcDIZJAbxqOCGReTrnIBMhTPEMJhpaXMgbm90IGJsb3ggZnJ1aXQ='))
+end
+
+function StartQuest(Enemy)
+    Quest_Person, Quest_Data = QuestData.getQuest(Enemy)
+    
+    for i,v in pairs(Quest_Data) do
+        if i == fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('znDOnLPBRciNhCkoWCcfkxZlixqCUcRkTVmlHanPTIeLaeEstHbiIgkQ0ZyYW1lUG9z') then
+            CFramePos = v
+        elseif typeof(v) == fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('oLIRcxKywNovdTiDDncqLhfGvlyPtiHQTvrRcWfFYhfwTrrpLiUwawcQ0ZyYW1l') then
+            CFramePos = v
+        end
+    end
+
+    if (Vector3.new(CFramePos.X, CFramePos.Y, CFramePos.Z) - lplr.Character.HumanoidRootPart.Position).Magnitude >= 10000 and Quest_Data.Entrance then
+        game:GetService(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('myRRFRBtLnqbRknCmyjOlsHtjEwosPaEekyLgRSkqFkEcicsEDZIIHoUmVwbGljYXRlZFN0b3JhZ2U=')).Remotes.CommF_:InvokeServer(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('LWhJxKOybLnpUrSgctOGpauDyMWtrzIDBjAUEWUfnIgneYlpfHUjSlfcmVxdWVzdEVudHJhbmNl'), Quest_Data.Entrance)
+        task.wait(0.4)
+     else
+        task.wait(1)
+        WalkTween(lplr.Character.HumanoidRootPart, CFramePos, 300)
+        task.wait(0.4)
+        if (Vector3.new(CFramePos.X, CFramePos.Y, CFramePos.Z) - lplr.Character.HumanoidRootPart.Position).Magnitude <= 20 then
+            game:GetService(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('ujlFPtGnvlDBpxvmJJaDwIKzFIlHiNrjhadaFUURduGoYPXhdbRBAPOUmVwbGljYXRlZFN0b3JhZ2U=')).Remotes.CommF_:InvokeServer(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('hclMPQwxSHQRxeqWZorsKurCkkvSQOxWDVHCoRRLmLgFZwDppUiQExNU3RhcnRRdWVzdA=='), Quest_Data.QuestName, Quest_Data.LevelQuest)
+            task.wait(0.5)
+        end
+    end
+end
+
+function UnEquipWeapon(Weapon)
+    if game.Players.LocalPlayer.Character:FindFirstChild(Weapon) then
+        game.Players.LocalPlayer.Character:FindFirstChild(Weapon).Parent = game.Players.LocalPlayer.Backpack
+    end
+end
+    
+function EquipWeapon(ToolSe)
+    if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe))
+    end
+end
+
+function Attack(Enemy)
+    if game:GetService(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('WIkXFUZByrlSlLiCewHxcngvxGgfoGTsxgHxUoQPxXkquFCqRwGllyuUGxheWVycw==')).LocalPlayer.PlayerGui.Main.Quest.Visible then
+        for i,v in pairs(game.Workspace.Enemies:GetChildren()) do
+            if v:IsA(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('ZAUMrEtZPFQnmOLaQdQEgjAuvgpGtlGNgaOTMeGpYPVvvOzruwwJjFQTW9kZWw=')) and v:FindFirstChild(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('hXyDORAKOehgECgxWvhhlHdrQHTuYSoRwbNLhFvdzKJNtyGqTNghHgqSHVtYW5vaWQ=')) and v:FindFirstChild(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('BtYQNjKARSaCuqIpJveSFUTLvXafHFHWUtwCvRRCffNjVFeJfuOalJXSHVtYW5vaWRSb290UGFydA==')) and v.Humanoid.Health > 0 and v.Name:find(Enemy) then
+                repeat task.wait()
+                    if (v.HumanoidRootPart.Position - lplr.Character.PrimaryPart.Position).Magnitude <= 54 then
+                        CombatFramework.activeController.hitboxMagnitude = 54
+                        game:GetService(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('TLufEHPScIOfeDRzTjtKoYWawTDJqxqexiopyzlnosxkgqcAbmxjNAuVmlydHVhbFVzZXI=')):CaptureController()
+                        game:GetService(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('wLwBZscGToNhrTvkKtmBjkkDrMLaDtRMHSSHvZlyLDCuJEqlLVQvBbPVmlydHVhbFVzZXI=')):Button1Down(Vector2.new(1000, 1000))
+                    end
+                    WalkTween(lplr.Character.HumanoidRootPart, CFrame.new(v.HumanoidRootPart.Position.X, v.HumanoidRootPart.Position.Y + 50, v.HumanoidRootPart.Position.Z), 400)
+                until not v.Parent or v.Humanoid.Health <= 0
+            else
+                for i,v in pairs(game.Workspace._WorldOrigin.EnemySpawns:GetChildren()) do
+                    if v.Name:find(Enemy) then
+                        WalkTween(lplr.Character.HumanoidRootPart, v.CFrame, 300) break
+                    end
+                end
+            end
+        end
+    else
+        StartQuest(Enemy)
+    end
+end
+
+
+
+
+
+local Meteor = loadstring(game:HttpGet(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('HuvxNjejrwJOdiJpRxBKpUYfgxhqYUOlcWDZzxfFMkAXyOEauRvrBjnaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3NobGV4d2FyZS9SYXlmaWVsZC9tYWluL3NvdXJjZQ==')))()
+
+local Bloxburg = Meteor:CreateWindow({
+    Name = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('KDnVsMRvPXSXkBjOTaWtMSDBNoDhSqcqGftDrHgEUENjhPEiCOmfvwMYXV0byBmYXJtIHNjcmlwdA=='),
+    LoadingTitle = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('OPWxYMxiBSScWPTNmOYFBhRvBENAtUfmLtyiVJSylAIOswvGmULNOpPc2NyaXB0'),
+    LoadingSubtitle = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('MJxxnfextMfENsrVTmEWeysibxOMtGksVbNzWOegurVNiilSxKBRWiNYnkgY2Fwemk='),
+    ConfigurationSaving = { Enabled = false, FolderName = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('vCmzSjeQYoKclpVbsQozeJsgFEwyoXmZBIUxXrxgjyJtVfFCegUhBtaTWV0ZW9yTGl0ZQ=='), FileName = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('aTXWODCPHGZPKiUVBYJNQETiunzaQFMujRdmzPeQcHbhbVTaNSDFVmDQmxveGJ1cmc=') }
+})
+
+local Autofarm = Bloxburg:CreateTab(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('oQQghRQidzNFsjJuszalHcFPaZQfQvESTWUrEEOmUyYZXOqLqJJNBeKQXV0b2Zhcm0='))
+
+local SelectedQuest = {Quest = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('QUjecGDwvXEAaaoLQOLrdosYcXFxoIkmLLQsCnaWBgZInQblEdNiegU'), Enabled = false, AutoSelect = false, FirstSea = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('XMGNBTJrAylIjuSKEFIRxRbpKiHyYhagsMFESMBdOwWwRZbsKwljJNd'), SecondSea = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('lhkbhzlMNseaWXgKSqOfIybxbTSeHaihhLKzCPBePpjkAQqgivssboM')}
+
+table.insert(QuestData.FirstSea, fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('MbINXOHemdVBwJjARtRJbZhRlqFiSyyIwuuhcYeocYwZLBpfEJfxtpIRmlyc3QgU2Vh'))
+table.insert(QuestData.SecondSea, fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('ekTAuBIPpJgMyHSrIcKHrsVIjZElbkDYyKciJQMCCnJyqjWtUmBJvllU2Vjb25kIFNlYQ=='))
+table.insert(QuestData.ThirdSea, fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('iOUnpiqZFJEplfyaIHqdyEBPfQebtCWQGjpeCdLAvihhJPTcQouoVQzVGhpcmQgU2Vh'))
+
+FirstSeaD = Autofarm:CreateDropdown({
+    Name = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('snpjkjBNDKYagHYieHchxJWfregZieJdJEdwHyThEabWEVDFjWGRkufUXVlc3QgOiBGaXJzdFNlYQ=='),
+    Options = QuestData.FirstSea,
+    Flag = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('snrOfJiaBwZTYtHSzWfHDoQtchRtKAYtOAYbayoAaGrSlHZzjBEDgGGRHJvcGRvd24x'),
+    CurrentOption = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('IwYrzMsyfLMXchLLjDHadmuWxPMUGeONbOpiYCXoeZREwjSXQGpUNhiRmlyc3QgU2Vh'),
+    Callback = function(Option)
+        SelectedQuest.Quest = Option
+    end,
+})
+
+local SecondSeaD = Autofarm:CreateDropdown({
+    Name = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('UNRZUkBxiiyNzpEsgbrRvMqMwhKJlHJKVJMaIqPilmzXeXyNLqcvPJhUXVlc3QgOiBTZWNvbmRTZWE='),
+    Options = QuestData.SecondSea,
+    Flag = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('yBUVWSkvOYLLFxIVkewAUKYDoJenxrWfHJccjEnmReTWlBoDSAoTaqNRHJvcGRvd24y'),
+    CurrentOption = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('qceqQnDsbOCNSUOGynhWTlhOxBaEnOMfcIUiRAAuGlRTpFNZrTdYSCLU2Vjb25kIFNlYQ=='),
+    Callback = function(Option)
+        SelectedQuest.Quest = Option
+    end,
+})
+
+local ThirdSeaD = Autofarm:CreateDropdown({
+    Name = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('zGmkobFXsfMxniMARZCWhasEIaqFbNnPtnBbzGxSzMPMijEOSCtSNzYUXVlc3QgOiBUaGlyZFNlYQ=='),
+    Options = QuestData.ThirdSea,
+    Flag = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('YyGqFBWiwRECcCpiBHFgyHEEmGPlNtLPUbcPnrtnCSOPivbqyNkALKaRHJvcGRvd24z'),
+    CurrentOption = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('ZvAyPgTXmYSkeOGMCZpTJSliVmKNPNdBYmWpGokNMqhlSkIINShLOUiVGhpcmQgU2Vh'),
+    Callback = function(Option)
+        SelectedQuest.Quest = Option
+    end,
+})
+
+
+Autofarm:CreateToggle({ Name = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('XXcgzlmrKoXEyfCzdHDgmsUAzsqUiMGnjtzZplpLijmfxmwBoUALasJQXV0byBTZWxlY3Q='), CurrentValue = false, Flag = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('tEWqjyoKJoCsjgIuDvDKTOQZBazqgSGgnZaiXfSmDtIXTTNyeIWKvYpVG9nZ2xlMg=='),
+    Callback = function(Value)
+        SelectedQuest.AutoSelect = Value
+        
+        while task.wait() do
+            if not SelectedQuest.AutoSelect then break end
+
+            SelectedEnemy = QuestData.CalculateLevel(tonumber(game.Players.LocalPlayer.PlayerGui.Main.Level.Text:sub(5)))
+
+            for i,v in pairs(QuestData.Quests) do
+                if v.EnemyName == SelectedEnemy then
+                    if v.World == 1 and World == 1 then
+                        FirstSeaD:Set(v.EnemyName)
+                    elseif v.World == 2 and World == 2 then
+                        SecondSeaD:Set(v.EnemyName)
+                    elseif v.World == 3 and World == 3 then
+                        ThirdSeaD:Set(v.EnemyName)
+                    end
+                end
+            end
+            
+        end
+    end
+})
+
+Autofarm:CreateSection(fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('nvbParFIsHLpYiaGZJCnvEvpxbSBYRaupFYjsmNxqIEgtUAyEIRoLNqUXVlc3QgQXV0b2Zhcm0='))
+
+Autofarm:CreateToggle({ Name = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('deAhsjtSobLUvPvFHUtQEtJMdeKBKORzFZhGdelhlhbqSGRgvLgfYvAUXVlc3QgQXV0b2Zhcm0='), CurrentValue = false, Flag = fJSbRCzDkQNDNtCTSMIwVKWSpgBCAVPNFtjXepOynIIiTNMxSjRXzsreREBLZNukRuRyM('xAGJSUxWNaNLnsbmJMRKAImlzxWjSHFWddNfZXzGWVXbmzTgauddWPmVG9nZ2xlMQ=='),
+    Callback = function(Value)
+        SelectedQuest.Enabled = Value
+
+        while task.wait() do
+            if not SelectedQuest.Enabled then break end
+
+            Attack(SelectedQuest.Quest)
+        end
+    end
+})    
